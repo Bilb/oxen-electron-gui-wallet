@@ -1,0 +1,28 @@
+name: "Setup and build"
+description: "Setup and build"
+runs:
+  using: "composite"
+  steps:
+    - name: Install node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: ".nvmrc"
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    # Not having this will break the windows build because the PATH won't be set by msbuild.
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v2
+      if: runner.os == 'Windows'
+
+      # with:
+      #   vs-version: "[16.4,16.5)"
+    - name: Download latest oxen core bins
+      shell: bash
+      run: ./tools/download-oxen-files.sh https://oxen.rocks/oxen-io/oxen-core/oxen-stable-win-LATEST.zip
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci

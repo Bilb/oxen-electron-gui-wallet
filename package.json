@@ -17,6 +17,8 @@
     "dev": "quasar dev -m electron",
     "build": "quasar build -m electron --publish=never",
     "windows": "quasar build -m electron --publish=never -T win",
+    "build-publish": "quasar build --mode electron --publish=always",
+    "windows-publish": "quasar build --mode electron --publish=always -T win",
     "lint": "eslint --fix .",
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\"",
     "ready": "npm run lint && npm run format"
